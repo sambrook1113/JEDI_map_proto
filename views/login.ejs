@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1> Login </h1>
+
+		<form action="/login" method="post">
+			<div>
+				<label for="name"> username: </label>
+				<input type="text" id="username" name="username" required> 
+			</div>
+			<br>
+			<div>
+				<label for="password"> password: </label>
+				<input type="text" id="password" name="password" required> 
+			</div>
+			<br>
+			<% if(message) { %>
+					<b style="color: red"><%= "*"+message %></b><br><br>
+				  <% } %>
+			<button type="submit"> Login </button>
+		</form>
+
+	</body>
+</html>

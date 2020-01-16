@@ -1,0 +1,16 @@
+@import '_variables.scss';
+h1{
+    font-size: 26px;
+    font-family: $standard;
+    color: $black;
+}
+
+p{
+    font-family: $standard;
+    color: $black;
+    font-size: 16 px;
+}
+
+button{
+    background-color: $purple;
+}

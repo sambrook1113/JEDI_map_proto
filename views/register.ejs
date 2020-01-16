@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1> Register New User </h1>
+
+        <form action="/register" method="post">
+            <div>
+				<label for="name"> First Name: </label>
+				<input type="text" id="firstname" name="firstname" <% if (firstname) { %>
+					value = <%= firstname %>
+				  <% } %> required> 
+			</div>
+            <br>
+            <div>
+				<label for="name"> Surname: </label>
+				<input type="text" id="surname" name="surname" <% if (surname) { %>
+					value = <%= surname %>
+				  <% } %> required> 
+			</div>
+			<br>
+			<div>
+				<label for="name"> username: </label>
+				<input type="text" id="username" name="username" required> 
+				<% if (message) { %>
+					<p><%= message %></p>
+				  <% } %>
+			</div>
+			<br>
+			<div>
+				<label for="password"> password: </label>
+				<input type="password" id="password" name="password" <% if (password) { %>
+					value = <%= password %>
+				  <% } %> required> 
+			</div>
+			<br>
+			<button type="submit"> Register </button>
+		</form>
+
+	</body>
+</html>

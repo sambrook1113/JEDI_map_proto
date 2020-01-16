@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+	<html>
+	<script>
+		function hide(id){
+			document.getElementById(id).style.display="none"
+		}
+	</script>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<h2>Edit personal details</h2><br><br><br>
+		<div id="k">
+			First name: <b> <%= thisUser.firstname %></b> 
+			<button onclick="hide('k')" class='secondary-btn'> Edit</button>
+
+			<hr><br><br>
+
+
+			Last name: <b> <%= thisUser.lastname %></b>
+			<hr><br><br>
+			Username: <b> <%= thisUser.username %></b>
+			<hr><br><br>
+		</div>	
+
+
+	</body>
+</html>

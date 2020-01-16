@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  web:
+    image: docker-node-express-mongo-bluesky
+    build: .
+    command: npm start
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./:/usr/src/app
+    - /usr/src/app/node_modules
+    depends_on:
+      - "mongo"
+
+  mongo:
+    image: "mongo"
+    ports:
+      - "27017:27107"
+
+  adminmongo:
+    image: "mrvautin/adminmongo"
+    ports:
+      - "1234:1234"
+    
+
+
+
+    

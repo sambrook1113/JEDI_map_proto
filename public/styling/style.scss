@@ -1,0 +1,68 @@
+@import '_variables.scss';
+@mixin text{ font-family: $standard; color: $black; }
+@mixin button-margins{padding: 10px; border: none; margin-top: 20px; margin-bottom: 20px; 
+    border-bottom: 2px solid $black !important;}
+
+h1, h2, h3{
+    @include text;
+    margin-top: 20px;
+}
+
+h1{
+    font-size: 34px;
+}
+
+p{
+    @include text;
+    font-size: 16 px;
+}
+
+a{
+    color: $nice-blue;
+}
+
+button{
+    @include button-margins;
+    @include text;
+    color: $black;
+    font-size: 16px;
+    border-bottom: 2px solid $black;
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s; /* Safari*/
+}
+
+button:hover{
+    border:2px solid $black;
+}
+
+button:focus{
+    border:2px solid $white;
+}
+
+.progress-btn{
+    background-color: $green;
+    color: $white;
+}
+
+.secondary-btn{
+    background-color: $light-grey;
+    border-bottom: $dark-grey;
+}
+
+.regress-btn{
+    background-color: $black;
+    color: $white;
+}
+.danger-btn{
+    background-color: $red;
+    color: $white;
+}
+
+.only-header{
+    text-align: center;
+    margin-top: 100px;
+}
+body > div{
+    display: flex;
+    justify-content: center;
+}
