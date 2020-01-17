@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 var User = require('../models/User.js')
 var thisUser = null // variable for which user is currently logged in
+const mapsAPI = String(process.env.mapsAPI)
 
 router.get('/', (req,res)=>{
 	res.render('index')
@@ -22,6 +23,10 @@ router.get('/about_us', (req,res)=> {
 
 router.get('/register', (req,res)=> {
 	res.render('register', {message: false, firstname: false, surname: false, password: false})
+})
+
+router.get('/jedi_map', (req,res)=>{
+	res.render('map', {mapsAPI: mapsAPI})
 })
 
 router.post('/login', async (req,res)=>{
