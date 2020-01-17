@@ -1,4 +1,4 @@
-## Blue Sky Template
+## JEDI Map Prototype
 
 Info about this repo: TODO.
 
