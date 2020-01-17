@@ -12,8 +12,7 @@ Info about this repo: TODO.
 
 2) Run this project from the command line using "npm run devStart"
 
-How to clone this repo: TODO.
+3) You must add a line to your .env file "mapsAPI=YOUR_API_KEY" where YOUR_API_KEY is the API key you've registered with google maps (https://developers.google.com/maps/documentation/javascript/get-api-key)
 
----
-Note:  Mongodb is required to run the code locally.
+
 
