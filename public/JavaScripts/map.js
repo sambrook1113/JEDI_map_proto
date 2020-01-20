@@ -30,9 +30,9 @@
  		scaledSize: markerSize},
  		map: map
  	});
- 	drawRadius(lat, lng, dng, "red");
- 	drawRadius(lat, lng, buf, "blue");
- 	return marker
+ 	danger = drawRadius(lat, lng, dng, "red");
+ 	buffer = drawRadius(lat, lng, buf, "blue");
+ 	return {marker: marker, danger: danger, buffer: buffer} 
  }
 
  function drawRadius(lat,lng,rad,col){
@@ -49,9 +49,10 @@
  	return new Promise(resolve => {
  		setTimeout(() => {
  			if(demoCoordinates.length>=1){
- 				activeAssets[0].marker.setPosition(new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]));
+ 				this.psn = new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]);
+ 				activeAssets[0].marker.setPosition(this.psn);
+ 				checkBreach(this.psn,demoSAM.buffer);
  				demoCoordinates.shift();
- 				console.log(demoCoordinates)
  				runSimulation(millisecondsToWait);
  			}
  			else{
@@ -60,6 +61,21 @@
  		}, millisecondsToWait);
  	});
  }
+
+ function checkBreach(marker,circle){
+ 	this.radius = circle.getRadius()
+ 	this.center = circle.getCenter()
+ 	this.distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(this.center, marker));
+ 	if((this.distance-this.radius)<=0){
+ 		console.log("circle breached!!!!")
+ 		return true
+ 	}
+ 	else{
+ 		return false
+ 	}
+ }
+
+
 
 
 
