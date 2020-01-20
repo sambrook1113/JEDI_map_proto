@@ -5,6 +5,7 @@ class Asset{
 		this.type=type;
 		this.map = map;
 		this.marker = marker;
+		this.timestamp;
 	}
 
 	setLocation(location){
