@@ -1,28 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="../public/styling/mapStyle.css">
     <script src="../public/javascripts/coordinates.js"></script>
     <script src="../public/javascripts/map.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=mapsAPI%>&callback=initMap" async defer></script>
     <script src="../public/javascripts/mapStyle.js"></script>
     <script src="../public/javascripts/navigate.js"></script>
+
     <title>JEDI MAP</title>
     <h1 style="color:white; text-decoration: underline; text-decoration-color: yellow;" align="middle">Joint Enterprise Defense Infrastructure </h1>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <style>
-      #map {
-        height: 90%;
-      }
-      html, body {
-        height: 85%;
-        margin: 5%;
-        padding: 0;
-      }
-      .gm-style-cc { display:none; }
-      .gm-svpc { display:none; }
-      .gmnoprint { display:none; }
-    </style>
   </head>
 
   <body id="map_ejs_body" bgcolor="#17263C">
@@ -30,5 +19,4 @@
      style="width:130px; display:block; margin-left:auto; margin-right:auto; margin-bottom: 10px">
     <div id="map"></div>
   </body>
-
 </html>

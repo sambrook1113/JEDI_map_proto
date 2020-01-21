@@ -1,0 +1,14 @@
+#map {
+  height: 90%;
+}
+
+html, body {
+  height: 85%;
+  margin: 5%;
+  padding: 0;
+}
+
+.gm-style-cc { display:none; }
+.gm-svpc { display:none; }
+.gmnoprint { display:none; }
+.gm-control-active gm-fullscreen-control { display:none; }
