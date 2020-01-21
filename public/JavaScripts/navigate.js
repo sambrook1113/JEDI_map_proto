@@ -25,6 +25,8 @@ async function demoSimulation(){
 
 function spotSAM(){
 	demoSAM = addSAM(51.895751, 0.890772,30000,60000);
+	document.getElementById('notificationDisplay').innerHTML = '"'+activeAssets[0].getType()+'" ' + "with ID: " + activeAssets[0].getID()+
+		" has spotted SAM at coordinates: " + "51.895751, 0.890772";
 }
 
 async function startSimulation(){
