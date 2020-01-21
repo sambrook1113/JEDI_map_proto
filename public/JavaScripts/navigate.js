@@ -15,7 +15,9 @@ var demoCoordinates = [[50.908187, -1.404441],
 						[52.630640, 1.296145]];
 
 async function demoSimulation(){
+	addTank("24816",51.866000, 0.975082);
     demoSAM = addSAM(51.895751, 0.890772,30000,60000); 
     addJet("23579",50.718690, -1.880682);
     await runSimulation(1500);
 }
+

@@ -5,9 +5,11 @@
  function initMap() {
  	map = new google.maps.Map(document.getElementById('map'), {
  		center: {lat: 51.852694460878936, lng: -0.21696062500000224},
- 		zoom: 8
+ 		zoom: 8,
+ 		styles: mapStyleJSON
  	});
  	markerSize= new google.maps.Size(64,64);
+ 	smallMarkerSize = new google.maps.Size(24,24);
  	demoSimulation();
  }
 
@@ -19,6 +21,18 @@
  		map: map
  	});
  	var asset = new Asset(id,[lat,lng],"Eurofighter Typhoon",map,marker);
+ 	activeAssets.push(asset);
+ 	return asset
+ }
+
+ function addTank(id,lat,lng){
+ 	var marker = new google.maps.Marker({
+ 		position: new google.maps.LatLng(lat,lng),
+ 		icon: {url:'../public/photos/tank.png',
+ 		scaledSize: smallMarkerSize},
+ 		map: map
+ 	});
+ 	var asset = new Asset(id,[lat,lng],"CHALLENGER 2",map,marker);
  	activeAssets.push(asset);
  	return asset
  }
@@ -50,7 +64,7 @@
  		setTimeout(() => {
  			if(demoCoordinates.length>=1){
  				this.psn = new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]);
- 				activeAssets[0].marker.setPosition(this.psn);
+ 				activeAssets[1].marker.setPosition(this.psn); // hard coded to second asset in list for simulation purposes
  				checkBreach(this.psn,demoSAM.buffer);
  				demoCoordinates.shift();
  				runSimulation(millisecondsToWait);
