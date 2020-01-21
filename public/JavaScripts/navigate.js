@@ -15,20 +15,20 @@ var demoCoordinates = [[50.908187, -1.404441],
 						[52.603542, 1.175982],
 						[52.630640, 1.296145]];
 
-// function initScenario(milliseconds) {
-//     setTimeout(function () {
-//         //TODO
-//     }, milliseconds);
-// }
 
 async function demoSimulation(){
 	addTank("24816",51.866000, 0.975082);
     //demoSAM = addSAM(51.895751, 0.890772,30000,60000); 
     addJet("23579",50.718690, -1.880682);
-    await runSimulation(1500);
+    //await runSimulation(1500);
 }
 
 function spotSAM(){
 	demoSAM = addSAM(51.895751, 0.890772,30000,60000);
 }
+
+async function startSimulation(){
+	await runSimulation(1000);
+}
+
 

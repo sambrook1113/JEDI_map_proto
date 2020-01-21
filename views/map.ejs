@@ -17,7 +17,15 @@
   <body id="map_ejs_body" bgcolor="#17263C">
     <img src="../public/photos/dod.png"
      style="width:130px; display:block; margin-left:auto; margin-right:auto; margin-bottom: 10px">
-    <div id="map"></div>
-    <button onclick="spotSAM()" style="display:block; margin-left:auto; margin-right:auto;">Discover SAM</button>
+     <div id="notificationDiv" style="display:block; margin-left:auto; margin-right:auto;text-align: center;">
+      <span id="notificationDisplay" style="color:red;font-size: 140%;"> </span>
+    </div>
+    <div id="map"></div><br>
+    <button onclick="startSimulation()" style="display:block; margin-left:auto; margin-right:auto;">Start Simulation</button><br>
+    <button onclick="spotSAM()" style="display:block; margin-left:auto; margin-right:auto;">Discover SAM</button><br>
+    <!-- <div id="notificationDiv">
+      <span id="notificationDisplay" style="color:white;display:block; margin-left:auto; margin-right:auto;"> </span>
+    </div> -->
+
   </body>
 </html>

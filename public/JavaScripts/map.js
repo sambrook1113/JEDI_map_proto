@@ -82,7 +82,9 @@
  	this.center = circle.getCenter()
  	this.distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(this.center, marker));
  	if((this.distance-this.radius)<=0){
- 		console.log("circle breached!!!!")
+ 		console.log("circle breached!!!!");
+ 		document.getElementById('notificationDisplay').innerHTML = "DANGER: Asset with ID: " + activeAssets[1].getID() + ' ("' + activeAssets[1].getType()+'")'+
+ 			" has entered buffer zone at time: " + new Date() + ". Alert has been sent to Asset.";
  		return true
  	}
  	else{
