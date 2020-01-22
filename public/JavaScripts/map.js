@@ -66,7 +66,7 @@
  				this.psn = new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]);
  				activeAssets[1].marker.setPosition(this.psn); // hard coded to second asset in list for simulation purposes
  				try{checkBreach(this.psn,demoSAM.buffer);}
- 				catch{}
+ 				catch{};
  				demoCoordinates.shift();
  				runSimulation(millisecondsToWait);
  			}
