@@ -26,7 +26,8 @@ router.get('/register', (req,res)=> {
 })
 
 router.get('/jedi_map', (req,res)=>{
-	res.render('map', {mapsAPI: mapsAPI})
+	var larry = require('../public/javascripts/tryAgainPleaseWork.js')
+	res.render('map', {mapsAPI: mapsAPI, larry:larry.larry})
 })
 
 router.post('/login', async (req,res)=>{

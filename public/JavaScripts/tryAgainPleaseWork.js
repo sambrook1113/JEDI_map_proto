@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 // Use the Azure IoT device SDK for devices that connect to Azure IoT Central.
 var iotHubTransport = require('azure-iot-device-mqtt').Mqtt;
@@ -143,3 +143,6 @@ var connectCallback = (err) => {
       hubClient.open(connectCallback);
     }
   });
+
+  var larry = "string larry";
+  module.exports = {larry:larry};

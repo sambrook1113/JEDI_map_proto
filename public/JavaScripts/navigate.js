@@ -30,6 +30,7 @@ function spotSAM(){
 }
 
 async function startSimulation(){
+	console.log(larry);
 	await runSimulation(1000);
 }
 
