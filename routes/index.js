@@ -3,6 +3,8 @@ const router = express.Router()
 var User = require('../models/User.js')
 var thisUser = null // variable for which user is currently logged in
 const mapsAPI = String(process.env.mapsAPI)
+const server = require('../server.js')
+const transponder = require('../private/JavaScripts/transponder.js')
 
 router.get('/', (req,res)=>{
 	res.render('index')
@@ -20,14 +22,13 @@ router.get('/about_us', (req,res)=> {
 	res.render('about_us')
 })
 
-
 router.get('/register', (req,res)=> {
 	res.render('register', {message: false, firstname: false, surname: false, password: false})
 })
 
 router.get('/jedi_map', (req,res)=>{
-	var larry = require('../public/javascripts/tryAgainPleaseWork.js')
-	res.render('map', {mapsAPI: mapsAPI, larry:larry.larry})
+	res.render('map', {mapsAPI: mapsAPI})
+	transponder.receive()
 })
 
 router.post('/login', async (req,res)=>{

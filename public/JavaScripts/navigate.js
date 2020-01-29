@@ -19,19 +19,26 @@ var demoCoordinates = [[50.908187, -1.404441],
 async function demoSimulation(){
 	addTank("24816",51.866000, 0.975082);
     //demoSAM = addSAM(51.895751, 0.890772,30000,60000); 
-    addJet("23579",50.718690, -1.880682);
+    addJet("23579",50.718690, -1.880682); 
     //await runSimulation(1500);
 }
 
 function spotSAM(){
 	demoSAM = addSAM(51.895751, 0.890772,30000,60000);
 	document.getElementById('notificationDisplay').innerHTML = '"'+activeAssets[0].getType()+'" ' + "with ID: " + activeAssets[0].getID()+
-		" has spotted SAM at coordinates: " + "51.895751, 0.890772";
+	" has spotted SAM at coordinates: " + "51.895751, 0.890772";
 }
 
 async function startSimulation(){
-	console.log(larry);
+	receive();
 	await runSimulation(1000);
+
 }
 
+function communicate(){
+	var socket = io('http://localhost:3001');
+	socket.on('server-side-greeting', (data)=>{
+		console.log('client side ++' + data)
+	})
+}
 
