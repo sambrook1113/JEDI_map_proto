@@ -21,6 +21,8 @@ async function demoSimulation(){
     //demoSAM = addSAM(51.895751, 0.890772,30000,60000); 
     addJet("23579",50.718690, -1.880682); 
     //await runSimulation(1500);
+    communicate();
+
 }
 
 function spotSAM(){
@@ -30,7 +32,6 @@ function spotSAM(){
 }
 
 async function startSimulation(){
-	receive();
 	await runSimulation(1000);
 
 }
