@@ -23,6 +23,9 @@ class Asset{
 	getType(){
 		return this.type;
 	}
+	getMarker(){
+		return this.marker;
+	}
 }
 
 

@@ -8,7 +8,7 @@ function receive(){
   const consumerGroup = "4Working"; // name of the default consumer group
   var counter = 0;
 
-async function main() {
+  async function main() {
 
   // create a consumer client for the event hub by specifying the checkpoint store
   const consumerClient = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
@@ -18,27 +18,16 @@ async function main() {
     processEvents: async (events, context) => {
       for (const event of events) {
         if(event.body.location != null ){
-          server.io.emit('iot_ping',event.body)
-          console.log(event.body)
-          // server.io.on('connection',(socket)=>{
-          //   socket.emit('iot_ping', event.body)
-          //   console.log(event.body)
-          // })
-            // console.log(`Received event: '${event.body}' from partition: '${context.partitionId}' and consumer group: '${context.consumerGroup}'`);
-            // console.log(event.body.location.lat + " " + event.body.location.lon)
-            // counter++
-            // console.log(counter)
+          server.io.emit('iot_ping', event.body)
           }
         }
         // update the checkpoint
         await context.updateCheckpoint(events[events.length - 1]);
       },
-
       processError: async (err, context) => {
         console.log(`Error : ${err}`);
       }
-    }
-    );
+    });
 
   // after 30 seconds, stop processing
   await new Promise((resolve) => {

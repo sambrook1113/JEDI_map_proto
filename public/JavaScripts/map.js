@@ -10,7 +10,8 @@
  	});
  	markerSize= new google.maps.Size(64,64);
  	smallMarkerSize = new google.maps.Size(24,24);
- 	demoSimulation();
+ 	//demoSimulation();
+ 	communicate();
  }
 
  function addJet(id,lat,lng){
@@ -59,22 +60,47 @@
  	return radius
  }
 
- function runSimulation(millisecondsToWait){
- 	return new Promise(resolve => {
- 		setTimeout(() => {
- 			if(demoCoordinates.length>=1){
- 				this.psn = new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]);
- 				activeAssets[1].marker.setPosition(this.psn); // hard coded to second asset in list for simulation purposes
- 				try{checkBreach(this.psn,demoSAM.buffer);}
- 				catch{};
- 				demoCoordinates.shift();
- 				runSimulation(millisecondsToWait);
- 			}
- 			else{
- 				console.log("simulation complete.")
- 			}
- 		}, millisecondsToWait);
- 	});
+ // function runSimulation(millisecondsToWait){
+ // 	return new Promise(resolve => {
+ // 		setTimeout(() => {
+ // 			if(demoCoordinates.length>=1){
+ // 				this.psn = new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]);
+ // 				activeAssets[1].marker.setPosition(this.psn); // hard coded to second asset in list for simulation purposes
+ // 				try{checkBreach(this.psn,demoSAM.buffer);}
+ // 				catch{};
+ // 				demoCoordinates.shift();
+ // 				runSimulation(millisecondsToWait);
+ // 			}
+ // 			else{
+ // 				console.log("simulation complete.")
+ // 			}
+ // 		}, millisecondsToWait);
+ // 	});
+ // }
+
+ function feedData(data){
+ 	let asset = null;
+ 	let assetIsActive = false;
+ 	for(var x=0; x<activeAssets.length; x++){
+ 		if(activeAssets[x].getID()==data.unique_id){
+ 			asset = activeAssets[x];
+ 			assetIsActive = true;
+ 		}
+ 	}
+ 	if(assetIsActive!=true){
+ 		asset = createNewAsset(data);
+ 	}
+ 	asset.marker.setPosition(new google.maps.LatLng(data.location.lat,data.location.lon))
+ }
+
+ function createNewAsset(data){
+ 	let type = data.type
+ 	switch(data.type) {
+  		case 'Eurofighter Typhoon':
+    let jet = addJet(data.unique_id, data.location.lat, data.location.lon)
+    activeAssets.push(jet)
+    return jet
+	}
  }
 
  function checkBreach(marker,circle){
