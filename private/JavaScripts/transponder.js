@@ -1,11 +1,12 @@
 
 
 function receive(){
-const { EventHubConsumerClient } = require("@azure/event-hubs");
-const connectionString = "Endpoint=sb://poc-data-ingestion.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=qbO+gi23r5F/rd44tXy6tsSt0Q1HXveDIleOdyoCIBA=";    
-const eventHubName = "poc-event-hub";
-const consumerGroup = "4Working"; // name of the default consumer group
-var counter = 0;
+  const server = require('../../server.js')
+  const { EventHubConsumerClient } = require("@azure/event-hubs");
+  const connectionString = "Endpoint=sb://poc-data-ingestion.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=qbO+gi23r5F/rd44tXy6tsSt0Q1HXveDIleOdyoCIBA=";    
+  const eventHubName = "poc-event-hub";
+  const consumerGroup = "4Working"; // name of the default consumer group
+  var counter = 0;
 
 async function main() {
 
@@ -14,13 +15,19 @@ async function main() {
 
   // subscribe for the events and specify handlers for processing the events and errors.
   const subscription = consumerClient.subscribe({
-      processEvents: async (events, context) => {
-        for (const event of events) {
-          if(true ){
-            console.log(`Received event: '${event.body}' from partition: '${context.partitionId}' and consumer group: '${context.consumerGroup}'`);
-            console.log(event.body.Alocation.lat + " " + event.body.Alocation.lon)
-            counter++
-            console.log(counter)
+    processEvents: async (events, context) => {
+      for (const event of events) {
+        if(event.body.location != null ){
+          server.io.emit('iot_ping',event.body)
+          console.log(event.body)
+          // server.io.on('connection',(socket)=>{
+          //   socket.emit('iot_ping', event.body)
+          //   console.log(event.body)
+          // })
+            // console.log(`Received event: '${event.body}' from partition: '${context.partitionId}' and consumer group: '${context.consumerGroup}'`);
+            // console.log(event.body.location.lat + " " + event.body.location.lon)
+            // counter++
+            // console.log(counter)
           }
         }
         // update the checkpoint
@@ -31,7 +38,7 @@ async function main() {
         console.log(`Error : ${err}`);
       }
     }
-  );
+    );
 
   // after 30 seconds, stop processing
   await new Promise((resolve) => {
@@ -56,11 +63,11 @@ main().catch((err) => {
 //   var counter = 0;
 //   const { EventHubClient, delay } = require("@azure/event-hubs");
 
-  
+
 
 //   require("dotenv").config();
 
-  
+
 
 // // Connection string - primary key of the Event Hubs namespace. 
 // // For example: Endpoint=sb://myeventhubns.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -94,13 +101,13 @@ main().catch((err) => {
 //     console.log('Error when receiving message: ', error)
 //   });
 
-  
+
 
 //   // Sleep for a while before stopping the receive operation.
 //   //await delay(15000);
 //   //await receiveHandler.stop();
 
-  
+
 
 //   //await client.close();
 // }

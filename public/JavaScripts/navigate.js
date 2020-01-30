@@ -38,8 +38,11 @@ async function startSimulation(){
 
 function communicate(){
 	var socket = io('http://localhost:3001');
-	socket.on('server-side-greeting', (data)=>{
-		console.log('client side ++' + data)
+	// socket.on('server-side-greeting', (data)=>{
+	// 	console.log('client side ++' + data)
+	// })
+	socket.on('iot_ping', (data)=>{
+		console.log('client side ++' + data.unique_id+": "+data.location.lat+data.location.lon)
 	})
 }
 
