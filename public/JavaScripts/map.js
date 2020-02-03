@@ -11,7 +11,6 @@
  	});
  	markerSize= new google.maps.Size(64,64);
  	smallMarkerSize = new google.maps.Size(24,24);
- 	//demoSimulation();
  	communicate();
  }
 
@@ -80,30 +79,30 @@
  	}
  	if(assetIsActive){ // for the sake of undefined edge cases
  		asset.marker.setPosition(new google.maps.LatLng(data.location.lat,data.location.lon));
- 		markEnemyAssets(data);
+ 		markEnemyAssets(data, ()=>{
+ 			for(var x=0; x<activeEnemyAssets.length; x++){
+ 				checkBreach(asset, activeEnemyAssets[x]);
+ 			}
+ 		});
  	}
  }
 
- function markEnemyAssets(data){
+ function markEnemyAssets(data, callback){
  	if(data.enemy != null){
  		let enemy = null;
  		let enemyIsActive = false;
- 		console.log(activeEnemyAssets.length)
  		for(var x=0; x<activeEnemyAssets.length; x++){
- 			//let tempLocationArray = [activeEnemyAssets[x].getMarker().getPosition().lat(), activeEnemyAssets[x].getMarker().getPosition().lng()]
  			if(data.enemy.id==activeEnemyAssets[x].id){
- 				console.log("found")
  				enemy = activeEnemyAssets[x];
  				enemyIsActive = true;
  			}
  		}
  		if(enemyIsActive!=true){
- 				console.log("creating new enemy asset")
  				enemy = addEnemyAsset(data.enemy.id,data.enemy.location.lat, data.enemy.location.lon, data.enemy.death, data.enemy.buffer);
  			}
- 			//enemy.marker.setPosition(new google.maps.LatLng(data.enemy.location.lat, data.enemy.location.lon));
  			enemy.updateLocation(data.enemy.location.lat, data.enemy.location.lon);
  	}
+ 	callback();
  }
 
  function createNewAsset(data){
@@ -121,18 +120,20 @@
 	}
  }
 
- function checkBreach(marker,circle){
- 	this.radius = circle.getRadius()
- 	this.center = circle.getCenter()
- 	this.distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(this.center, marker));
- 	if((this.distance-this.radius)<=0){
- 		console.log("circle breached!!!!");
- 		document.getElementById('notificationDisplay').innerHTML = "DANGER: Asset with ID: " + activeAssets[1].getID() + ' ("' + activeAssets[1].getType()+'")'+
- 			" has entered buffer zone at time: " + new Date() + ". Alert has been sent to Asset.";
- 		return true
- 	}
- 	else{
- 		return false
+ function checkBreach(asset, enAsset){
+ 	if(asset.type=='Eurofighter Typhoon'){
+ 		let distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(enAsset.bufferMarker.getCenter(), asset.marker.getPosition()));
+ 		if(distance<enAsset.bufferMarker.getRadius()){
+ 			console.log("circle breached!!!!");
+ 			// document.getElementById('notificationDisplay').innerHTML = "DANGER: Asset with ID: " + activeAssets[1].getID() + ' ("' + activeAssets[1].getType()+'")'+
+ 			// 	" has entered buffer zone at time: " + new Date() + ". Alert has been sent to Asset.";
+ 			document.getElementById('notificationDisplay').innerHTML = "DANGER";
+ 		
+ 			return true
+ 		}
+ 		else{
+ 			return false
+ 		}
  	}
  }
 

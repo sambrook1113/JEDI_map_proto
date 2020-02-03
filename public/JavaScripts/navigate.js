@@ -16,29 +16,15 @@ var demoCoordinates = [[50.908187, -1.404441],
 						[52.630640, 1.296145]];
 
 
-// async function demoSimulation(){
-// 	//addTank("24816",51.866000, 0.975082);
-//     //addJet("23579",50.718690, -1.880682); 
-//     communicate();
-// }
-
 function spotSAM(){
-	//demoSAM = addSAM(51.895751, 0.890772,30000,60000);
 	document.getElementById('notificationDisplay').innerHTML = '"'+activeAssets[0].getType()+'" ' + "with ID: " + activeAssets[0].getID()+
 	" has spotted SAM at coordinates: " + "51.895751, 0.890772";
 }
-
-// async function startSimulation(){
-// 	await runSimulation(1000);
-
-// }
 
 function communicate(){
 	var socket = io('http://localhost:3001');
 	socket.on('iot_ping', (data)=>{
 		feedData(data);
-		//console.log(data.unique_id+": "+data.location.lat+" "+data.location.lon);
-
 	})
 }
 
