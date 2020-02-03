@@ -23,7 +23,7 @@ var demoCoordinates = [[50.908187, -1.404441],
 // }
 
 function spotSAM(){
-	demoSAM = addSAM(51.895751, 0.890772,30000,60000);
+	//demoSAM = addSAM(51.895751, 0.890772,30000,60000);
 	document.getElementById('notificationDisplay').innerHTML = '"'+activeAssets[0].getType()+'" ' + "with ID: " + activeAssets[0].getID()+
 	" has spotted SAM at coordinates: " + "51.895751, 0.890772";
 }
@@ -37,7 +37,7 @@ function communicate(){
 	var socket = io('http://localhost:3001');
 	socket.on('iot_ping', (data)=>{
 		feedData(data);
-		console.log(data.unique_id+": "+data.location.lat+" "+data.location.lon);
+		//console.log(data.unique_id+": "+data.location.lat+" "+data.location.lon);
 
 	})
 }

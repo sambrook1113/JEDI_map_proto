@@ -1,6 +1,7 @@
  var map;
  var markerSize;
  var activeAssets = [];
+ var activeEnemyAssets = [];
 
  function initMap() {
  	map = new google.maps.Map(document.getElementById('map'), {
@@ -38,7 +39,7 @@
  	return asset
  }
 
- function addSAM(lat,lng,dng,buf){
+ function addEnemyAsset(EnID, lat,lng,dng,buf){
  	var marker = new google.maps.Marker({
  		position: new google.maps.LatLng(lat,lng),
  		icon: {url:'../public/photos/SAM.png',
@@ -47,7 +48,11 @@
  	});
  	danger = drawRadius(lat, lng, dng, "red");
  	buffer = drawRadius(lat, lng, buf, "blue");
- 	return {marker: marker, danger: danger, buffer: buffer} 
+ 	let enemyAsset = new EnemyAsset(EnID, [lat,lng], map, marker, buf, dng);
+ 	enemyAsset.setBufferMarker(buffer);
+ 	enemyAsset.setDangerMarker(danger);
+ 	activeEnemyAssets.push(enemyAsset);
+ 	return enemyAsset
  }
 
  function drawRadius(lat,lng,rad,col){
@@ -60,24 +65,6 @@
  	return radius
  }
 
- // function runSimulation(millisecondsToWait){
- // 	return new Promise(resolve => {
- // 		setTimeout(() => {
- // 			if(demoCoordinates.length>=1){
- // 				this.psn = new google.maps.LatLng(demoCoordinates[0][0], demoCoordinates[0][1]);
- // 				activeAssets[1].marker.setPosition(this.psn); // hard coded to second asset in list for simulation purposes
- // 				try{checkBreach(this.psn,demoSAM.buffer);}
- // 				catch{};
- // 				demoCoordinates.shift();
- // 				runSimulation(millisecondsToWait);
- // 			}
- // 			else{
- // 				console.log("simulation complete.")
- // 			}
- // 		}, millisecondsToWait);
- // 	});
- // }
-
  function feedData(data){
  	let asset = null;
  	let assetIsActive = false;
@@ -89,17 +76,48 @@
  	}
  	if(assetIsActive!=true){
  		asset = createNewAsset(data);
+ 		assetIsActive = true;
  	}
- 	asset.marker.setPosition(new google.maps.LatLng(data.location.lat,data.location.lon))
+ 	if(assetIsActive){ // for the sake of undefined edge cases
+ 		asset.marker.setPosition(new google.maps.LatLng(data.location.lat,data.location.lon));
+ 		markEnemyAssets(data);
+ 	}
+ }
+
+ function markEnemyAssets(data){
+ 	if(data.enemy != null){
+ 		let enemy = null;
+ 		let enemyIsActive = false;
+ 		console.log(activeEnemyAssets.length)
+ 		for(var x=0; x<activeEnemyAssets.length; x++){
+ 			//let tempLocationArray = [activeEnemyAssets[x].getMarker().getPosition().lat(), activeEnemyAssets[x].getMarker().getPosition().lng()]
+ 			if(data.enemy.id==activeEnemyAssets[x].id){
+ 				console.log("found")
+ 				enemy = activeEnemyAssets[x];
+ 				enemyIsActive = true;
+ 			}
+ 		}
+ 		if(enemyIsActive!=true){
+ 				console.log("creating new enemy asset")
+ 				enemy = addEnemyAsset(data.enemy.id,data.enemy.location.lat, data.enemy.location.lon, data.enemy.death, data.enemy.buffer);
+ 			}
+ 			//enemy.marker.setPosition(new google.maps.LatLng(data.enemy.location.lat, data.enemy.location.lon));
+ 			enemy.updateLocation(data.enemy.location.lat, data.enemy.location.lon);
+ 	}
  }
 
  function createNewAsset(data){
  	let type = data.type
  	switch(data.type) {
-  		case 'Eurofighter Typhoon':
-    let jet = addJet(data.unique_id, data.location.lat, data.location.lon)
-    activeAssets.push(jet)
-    return jet
+  	case 'Eurofighter Typhoon':
+    	let jet = addJet(data.unique_id, data.location.lat, data.location.lon)
+    	activeAssets.push(jet)
+    	return jet
+    	break;
+    case 'Challenger 2':
+    	let tank = addTank(data.unique_id, data.location.lat, data.location.lon)
+    	activeAssets.push(tank)
+    return tank
 	}
  }
 
