@@ -124,7 +124,6 @@
  	if(asset.type=='Eurofighter Typhoon'){
  		let distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(enAsset.bufferMarker.getCenter(), asset.marker.getPosition()));
  		if(distance<enAsset.bufferMarker.getRadius()){
- 			console.log("circle breached!!!!");
  			// document.getElementById('notificationDisplay').innerHTML = "DANGER: Asset with ID: " + activeAssets[1].getID() + ' ("' + activeAssets[1].getType()+'")'+
  			// 	" has entered buffer zone at time: " + new Date() + ". Alert has been sent to Asset.";
  			//document.getElementById('notificationDisplay').innerHTML = "DANGER";
@@ -140,12 +139,13 @@
  function updateAssetsLedger(){
  	let myHTML = "";
  	myHTML += "<table>";
+ 	myHTML += `<tr><th colspan="3">FRIENDLY ASSETS</th></tr>`
  	myHTML += "<tr> <th>ID</th><th>Type</th><th>Last Position</th></tr>"
  	for(var x=0; x<activeAssets.length;x++){
  		myHTML += "<tr>";
  		myHTML += "<td>" + activeAssets[x].id + "</td>";
  		myHTML += "<td>" + activeAssets[x].type + "</td>";
- 		myHTML += "<td>" + activeAssets[x].marker.getPosition().lat()+" "+ activeAssets[x].marker.getPosition().lng()+ "</td>";
+ 		myHTML += "<td>" + activeAssets[x].marker.getPosition().lat().toFixed(6)+", "+ activeAssets[x].marker.getPosition().lng().toFixed(6)+ "</td>";
  		myHTML += "</tr>";
  	}
  	myHTML += "</table>";
@@ -155,11 +155,12 @@
   function updateEnemyAssetsLedger(){
  	let myHTML = "";
  	myHTML += "<table>";
+ 	myHTML += `<tr><th colspan="2">ENEMY ASSETS</th></tr>`
  	myHTML += "<tr> <th>ID<th>Last Position</th></tr>"
  	for(var x=0; x<activeEnemyAssets.length;x++){
  		myHTML += "<tr>";
  		myHTML += "<td>" + activeEnemyAssets[x].id + "</td>";
- 		myHTML += "<td>" + activeEnemyAssets[x].marker.getPosition().lat()+" "+ activeEnemyAssets[x].marker.getPosition().lng()+ "</td>";
+ 		myHTML += "<td>" + activeEnemyAssets[x].marker.getPosition().lat().toFixed(6)+", "+ activeEnemyAssets[x].marker.getPosition().lng().toFixed(6)+ "</td>";
  		myHTML += "</tr>";
  	}
  	myHTML += "</table>";

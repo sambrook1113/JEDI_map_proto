@@ -21,6 +21,10 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+tr:first-child th{
+  text-align: center !important;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;

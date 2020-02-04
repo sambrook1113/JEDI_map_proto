@@ -9,8 +9,6 @@ function communicate(){
 	var socket = io('http://localhost:3001');
 	socket.on('iot_ping', (data)=>{
 		feedData(data);
-		console.log('active assets: ' +activeAssets.length)
-		console.log('enemy assets: '+ activeEnemyAssets.length)
 	})
 }
 
