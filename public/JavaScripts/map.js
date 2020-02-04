@@ -112,12 +112,10 @@
  	switch(data.type) {
   	case 'Eurofighter Typhoon':
     	let jet = addJet(data.unique_id, data.location.lat, data.location.lon)
-    	activeAssets.push(jet)
     	return jet
     	break;
     case 'Challenger 2':
     	let tank = addTank(data.unique_id, data.location.lat, data.location.lon)
-    	activeAssets.push(tank)
     return tank
 	}
  }
