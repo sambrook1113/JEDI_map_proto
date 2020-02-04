@@ -13,7 +13,7 @@ html, body {
 
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 
@@ -40,4 +40,8 @@ table {
 .active-enemy-assets{
   overflow:auto;
   height: auto;
+}
+
+.received table{
+  font-size:x-small !important;
 }
