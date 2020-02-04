@@ -10,3 +10,30 @@ html, body {
 
 .gm-style-cc { display:none; }
 .gm-svpc { display:none; }
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.active-assets{
+  overflow:auto;
+  height: auto;
+}
+
+.active-enemy-assets{
+  overflow:auto;
+  height: auto;
+}

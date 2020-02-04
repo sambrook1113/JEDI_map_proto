@@ -5,7 +5,7 @@ function receive(){
   const { EventHubConsumerClient } = require("@azure/event-hubs");
   const connectionString = "Endpoint=sb://poc-data-ingestion.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=qbO+gi23r5F/rd44tXy6tsSt0Q1HXveDIleOdyoCIBA=";    
   const eventHubName = "poc-event-hub";
-  const consumerGroup = "4Working"; // name of the default consumer group
+  const consumerGroup = "do_not_use"; // consumer group
   var counter = 0;
 
   async function main() {

@@ -84,6 +84,7 @@
  				checkBreach(asset, activeEnemyAssets[x]);
  			}
  		});
+ 		updateAssetsLedger();
  	}
  }
 
@@ -100,7 +101,8 @@
  		if(enemyIsActive!=true){
  				enemy = addEnemyAsset(data.enemy.id,data.enemy.location.lat, data.enemy.location.lon, data.enemy.death, data.enemy.buffer);
  			}
- 			enemy.updateLocation(data.enemy.location.lat, data.enemy.location.lon);
+ 		enemy.updateLocation(data.enemy.location.lat, data.enemy.location.lon);
+ 		updateEnemyAssetsLedger()
  	}
  	callback();
  }
@@ -127,7 +129,7 @@
  			console.log("circle breached!!!!");
  			// document.getElementById('notificationDisplay').innerHTML = "DANGER: Asset with ID: " + activeAssets[1].getID() + ' ("' + activeAssets[1].getType()+'")'+
  			// 	" has entered buffer zone at time: " + new Date() + ". Alert has been sent to Asset.";
- 			document.getElementById('notificationDisplay').innerHTML = "DANGER";
+ 			//document.getElementById('notificationDisplay').innerHTML = "DANGER";
  		
  			return true
  		}
@@ -135,6 +137,35 @@
  			return false
  		}
  	}
+ }
+
+ function updateAssetsLedger(){
+ 	let myHTML = "";
+ 	myHTML += "<table>";
+ 	myHTML += "<tr> <th>ID</th><th>Type</th><th>Last Position</th></tr>"
+ 	for(var x=0; x<activeAssets.length;x++){
+ 		myHTML += "<tr>";
+ 		myHTML += "<td>" + activeAssets[x].id + "</td>";
+ 		myHTML += "<td>" + activeAssets[x].type + "</td>";
+ 		myHTML += "<td>" + activeAssets[x].marker.getPosition().lat()+" "+ activeAssets[x].marker.getPosition().lng()+ "</td>";
+ 		myHTML += "</tr>";
+ 	}
+ 	myHTML += "</table>";
+ 	document.getElementById('active-assets').innerHTML = myHTML;
+ }
+
+  function updateEnemyAssetsLedger(){
+ 	let myHTML = "";
+ 	myHTML += "<table>";
+ 	myHTML += "<tr> <th>ID<th>Last Position</th></tr>"
+ 	for(var x=0; x<activeEnemyAssets.length;x++){
+ 		myHTML += "<tr>";
+ 		myHTML += "<td>" + activeEnemyAssets[x].id + "</td>";
+ 		myHTML += "<td>" + activeEnemyAssets[x].marker.getPosition().lat()+" "+ activeEnemyAssets[x].marker.getPosition().lng()+ "</td>";
+ 		myHTML += "</tr>";
+ 	}
+ 	myHTML += "</table>";
+ 	document.getElementById('active-enemy-assets').innerHTML = myHTML;
  }
 
 
