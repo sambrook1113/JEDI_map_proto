@@ -26,6 +26,30 @@
  	return asset
  }
 
+  function addDestroyer(id,lat,lng){
+ 	var marker = new google.maps.Marker({
+ 		position: new google.maps.LatLng(lat,lng),
+ 		icon: {url:'../public/photos/destroyer.png',
+ 		scaledSize: markerSize},
+ 		map: map
+ 	});
+ 	var asset = new Asset(id,[lat,lng],"Daring Class Destroyer",map,marker);
+ 	activeAssets.push(asset);
+ 	return asset
+ }
+
+   function addSub(id,lat,lng){
+ 	var marker = new google.maps.Marker({
+ 		position: new google.maps.LatLng(lat,lng),
+ 		icon: {url:'../public/photos/sub.png',
+ 		scaledSize: markerSize},
+ 		map: map
+ 	});
+ 	var asset = new Asset(id,[lat,lng],"Vanguard Class Submarine",map,marker);
+ 	activeAssets.push(asset);
+ 	return asset
+ }
+
  function addTank(id,lat,lng){
  	var marker = new google.maps.Marker({
  		position: new google.maps.LatLng(lat,lng),
@@ -117,7 +141,15 @@
     	break;
     case 'Challenger 2':
     	let tank = addTank(data.unique_id, data.location.lat, data.location.lon)
-    return tank
+    	return tank
+    	break;
+    case 'Daring Class Destroyer':
+    	let destroyer = addDestroyer(data.unique_id, data.location.lat, data.location.lon)
+    	return destroyer
+    	break;
+    case 'Vanguard Class Submarine':
+    	let sub = addSub(data.unique_id, data.location.lat, data.location.lon)
+    	return sub
 	}
  }
 
@@ -193,8 +225,8 @@ function updateSentLedger(data, enAsset){
 	let cell2 = row.insertCell(1);
 	cell1.innerHTML = data.unique_id;
 	cell2.innerHTML = "DANGER: En Asset at: " + enAsset.bufferMarker.getCenter().lat() + ", " + enAsset.bufferMarker.getCenter().lng();
-
 }
+
 
 
 
