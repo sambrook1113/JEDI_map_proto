@@ -167,6 +167,21 @@
  	document.getElementById('active-enemy-assets').innerHTML = myHTML;
  }
 
+function updateReceivedLedger(data){
+	let table = document.getElementById("received-table");
+	if(table.rows.length>=5){
+		table.deleteRow(-1);
+	}
+
+	let row = table.insertRow(2);
+	let cell1 = row.insertCell(0);
+	let cell2 = row.insertCell(1);
+	let cell3 = row.insertCell(2);
+	cell1.innerHTML = data.type;
+	cell2.innerHTML = data.location.lat + ", "+ data.location.lon;
+	cell3.innerHTML = new Date();
+
+}
 
 
 

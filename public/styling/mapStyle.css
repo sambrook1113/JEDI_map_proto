@@ -42,6 +42,6 @@ table {
   height: auto;
 }
 
-.received table{
-  font-size:x-small !important;
+#received-table{
+  font-size:11px; !important;
 }
