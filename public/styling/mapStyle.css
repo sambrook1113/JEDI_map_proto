@@ -42,6 +42,6 @@ table {
   height: auto;
 }
 
-#received-table{
+#received-table td, #sent-table td{
   font-size:11px; !important;
 }

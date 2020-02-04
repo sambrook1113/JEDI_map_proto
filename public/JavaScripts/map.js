@@ -81,10 +81,11 @@
  		asset.marker.setPosition(new google.maps.LatLng(data.location.lat,data.location.lon));
  		markEnemyAssets(data, ()=>{
  			for(var x=0; x<activeEnemyAssets.length; x++){
- 				checkBreach(asset, activeEnemyAssets[x]);
+ 				checkBreach(asset, activeEnemyAssets[x], data);
  			}
  		});
  		updateAssetsLedger();
+ 		updateReceivedLedger(data);
  	}
  }
 
@@ -120,14 +121,12 @@
 	}
  }
 
- function checkBreach(asset, enAsset){
+ function checkBreach(asset, enAsset, data){
+ 	console.log('checkBreach')
  	if(asset.type=='Eurofighter Typhoon'){
  		let distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(enAsset.bufferMarker.getCenter(), asset.marker.getPosition()));
  		if(distance<enAsset.bufferMarker.getRadius()){
- 			// document.getElementById('notificationDisplay').innerHTML = "DANGER: Asset with ID: " + activeAssets[1].getID() + ' ("' + activeAssets[1].getType()+'")'+
- 			// 	" has entered buffer zone at time: " + new Date() + ". Alert has been sent to Asset.";
- 			//document.getElementById('notificationDisplay').innerHTML = "DANGER";
- 		
+ 			updateSentLedger(data, enAsset)
  			return true
  		}
  		else{
@@ -183,6 +182,19 @@ function updateReceivedLedger(data){
 
 }
 
+function updateSentLedger(data, enAsset){
+	let table = document.getElementById("sent-table");
+	if(table.rows.length>=5){
+		table.deleteRow(-1);
+	}
+
+	let row = table.insertRow(2);
+	let cell1 = row.insertCell(0);
+	let cell2 = row.insertCell(1);
+	cell1.innerHTML = data.unique_id;
+	cell2.innerHTML = "DANGER: En Asset at: " + enAsset.bufferMarker.getCenter().lat() + ", " + enAsset.bufferMarker.getCenter().lng();
+
+}
 
 
 
