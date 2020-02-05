@@ -38,14 +38,26 @@
  	return asset
  }
 
-   function addSub(id,lat,lng){
+ //   function addSub(id,lat,lng){
+ // 	var marker = new google.maps.Marker({
+ // 		position: new google.maps.LatLng(lat,lng),
+ // 		icon: {url:'../public/photos/sub.png',
+ // 		scaledSize: markerSize},
+ // 		map: map
+ // 	});
+ // 	var asset = new Asset(id,[lat,lng],"Vanguard Class Submarine",map,marker);
+ // 	activeAssets.push(asset);
+ // 	return asset
+ // }
+
+  function addPredator(id,lat,lng){
  	var marker = new google.maps.Marker({
  		position: new google.maps.LatLng(lat,lng),
- 		icon: {url:'../public/photos/sub.png',
+ 		icon: {url:'../public/photos/drone.png',
  		scaledSize: markerSize},
  		map: map
  	});
- 	var asset = new Asset(id,[lat,lng],"Vanguard Class Submarine",map,marker);
+ 	var asset = new Asset(id,[lat,lng],"Predator UAV",map,marker);
  	activeAssets.push(asset);
  	return asset
  }
@@ -62,13 +74,22 @@
  	return asset
  }
 
- function addEnemyAsset(EnID, lat,lng,dng,buf){
+ function addEnemyAsset(EnID, lat,lng,dng,buf, type){
+ 	let url = '../public/photos/SAM.png'
+ 	if(type=='Enemy Tank'){
+ 		url = '../public/photos/entank.png'
+ 	}
+ 	if(type=='Enemy Submarine'){
+ 		url = '../public/photos/sub.png'
+ 	}
  	var marker = new google.maps.Marker({
  		position: new google.maps.LatLng(lat,lng),
- 		icon: {url:'../public/photos/SAM.png',
+ 		icon: {url:url,
  		scaledSize: markerSize},
  		map: map
  	});
+ 	let danger = null;
+ 	let buffer = null;
  	danger = drawRadius(lat, lng, dng, "red");
  	buffer = drawRadius(lat, lng, buf, "blue");
  	let enemyAsset = new EnemyAsset(EnID, [lat,lng], map, marker, buf, dng);
@@ -124,7 +145,7 @@
  			}
  		}
  		if(enemyIsActive!=true){
- 				enemy = addEnemyAsset(data.enemy.id,data.enemy.location.lat, data.enemy.location.lon, data.enemy.death, data.enemy.buffer);
+ 				enemy = addEnemyAsset(data.enemy.id,data.enemy.location.lat, data.enemy.location.lon, data.enemy.death, data.enemy.buffer,data.enemy.type);
  			}
  		enemy.updateLocation(data.enemy.location.lat, data.enemy.location.lon);
  		updateEnemyAssetsLedger()
@@ -147,14 +168,13 @@
     	let destroyer = addDestroyer(data.unique_id, data.location.lat, data.location.lon)
     	return destroyer
     	break;
-    case 'Vanguard Class Submarine':
-    	let sub = addSub(data.unique_id, data.location.lat, data.location.lon)
-    	return sub
+    case 'Predator':
+    	let predator = addPredator(data.unique_id, data.location.lat, data.location.lon)
+    	return predator
 	}
  }
 
  function checkBreach(asset, enAsset, data){
- 	console.log('checkBreach')
  	if(asset.type=='Eurofighter Typhoon'){
  		let distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(enAsset.bufferMarker.getCenter(), asset.marker.getPosition()));
  		if(distance<enAsset.bufferMarker.getRadius()){
@@ -227,6 +247,25 @@ function updateSentLedger(data, enAsset){
 	cell2.innerHTML = "DANGER: En Asset at: " + enAsset.bufferMarker.getCenter().lat() + ", " + enAsset.bufferMarker.getCenter().lng();
 }
 
+function scenario1(){
+	map.setCenter({lat: 51.866000, lng: 0.890772});
+        map.setZoom(8);
+}
+
+function scenario2(){
+	map.setCenter({lat:51.745026 , lng: -0.242528});
+        map.setZoom(15);
+}
+
+function scenario3(){
+	map.setCenter({lat:50.659997, lng: 1.125203});
+        map.setZoom(7);
+}
+
+function scenario4(){
+	map.setCenter({lat: 51.866000, lng: 0.890772});
+    map.setZoom(8);
+}
 
 
 

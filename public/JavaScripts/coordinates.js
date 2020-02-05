@@ -81,6 +81,7 @@ class EnemyAsset{
 		this.marker.setPosition(newPosn);
 		this.bufferMarker.setCenter(newPosn);
 		this.dangerMarker.setCenter(newPosn);
+		
 	}
 }
 
