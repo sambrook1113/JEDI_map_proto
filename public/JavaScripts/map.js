@@ -75,16 +75,19 @@
  }
 
  function addEnemyAsset(EnID, lat,lng,dng,buf, type){
- 	let url = '../public/photos/SAM.png'
- 	if(type=='Enemy Tank'){
- 		url = '../public/photos/entank.png'
+ 	let urll = null;
+ 	if(type=='SAM'){
+ 		urll = '../public/photos/SAM.png'
  	}
- 	if(type=='Enemy Submarine'){
- 		url = '../public/photos/sub.png'
+ 	if(type=='Enemy Tank'){
+ 		urll = '../public/photos/entank.png'
+ 	}
+ 	if(type=='Enemy Submarine'||type==null){
+ 		urll = '../public/photos/sub/sub.png'
  	}
  	var marker = new google.maps.Marker({
  		position: new google.maps.LatLng(lat,lng),
- 		icon: {url:url,
+ 		icon: {url:urll,
  		scaledSize: markerSize},
  		map: map
  	});
@@ -92,7 +95,7 @@
  	let buffer = null;
  	danger = drawRadius(lat, lng, dng, "red");
  	buffer = drawRadius(lat, lng, buf, "blue");
- 	let enemyAsset = new EnemyAsset(EnID, [lat,lng], map, marker, buf, dng);
+ 	let enemyAsset = new EnemyAsset(EnID, [lat,lng], map, marker, buf, dng, type);
  	enemyAsset.setBufferMarker(buffer);
  	enemyAsset.setDangerMarker(danger);
  	activeEnemyAssets.push(enemyAsset);
@@ -175,16 +178,18 @@
  }
 
  function checkBreach(asset, enAsset, data){
- 	if(asset.type=='Eurofighter Typhoon'){
+ 	if(asset.type=='Eurofighter Typhoon'&&enAsset.type=='SAM'){
  		let distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(enAsset.bufferMarker.getCenter(), asset.marker.getPosition()));
  		if(distance<enAsset.bufferMarker.getRadius()){
  			updateSentLedger(data, enAsset)
- 			return true
  		}
- 		else{
- 			return false
+ 	};
+ 	if(asset.type=='Daring Class Destroyer'&&enAsset.type=='Enemy Submarine'){
+ 		let distance = parseInt(google.maps.geometry.spherical.computeDistanceBetween(enAsset.bufferMarker.getCenter(), asset.marker.getPosition()));
+ 		if(distance<enAsset.bufferMarker.getRadius()){
+ 			updateSentLedger(data, enAsset)
  		}
- 	}
+ 	};
  }
 
  function updateAssetsLedger(){
@@ -245,6 +250,9 @@ function updateSentLedger(data, enAsset){
 	let cell2 = row.insertCell(1);
 	cell1.innerHTML = data.unique_id;
 	cell2.innerHTML = "DANGER: En Asset at: " + enAsset.bufferMarker.getCenter().lat() + ", " + enAsset.bufferMarker.getCenter().lng();
+	for(var x=0; x<activeAssets.length; x++){
+		//console.log(activeAssets[x].id+" " + activeAssets[x].type)
+	}
 }
 
 function scenario1(){
@@ -263,8 +271,8 @@ function scenario3(){
 }
 
 function scenario4(){
-	map.setCenter({lat: 51.866000, lng: 0.890772});
-    map.setZoom(8);
+	map.setCenter({lat:50.659997, lng: 1.125203});
+        map.setZoom(7);
 }
 
 

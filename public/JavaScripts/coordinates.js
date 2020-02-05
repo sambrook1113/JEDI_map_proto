@@ -29,7 +29,7 @@ class Asset{
 }
 
 class EnemyAsset{
-	constructor(id ,location, map, marker, buffer, danger){
+	constructor(id ,location, map, marker, buffer, danger, type){
 		this.id = id;
 		this.location = location;
 		this.map = map;
@@ -38,6 +38,7 @@ class EnemyAsset{
 		this.danger = danger;
 		this.bufferMarker;
 		this.dangerMarker;
+		this.type = type;
 	}
 
 	setLocation(location){
